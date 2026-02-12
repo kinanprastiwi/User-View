@@ -2,11 +2,14 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Halaman Utama - Aplikasi Piket')</title>
+    <title>@yield('title', 'Aplikasi Piket - User')</title>
     
+    <!-- Google Font Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Material Symbols -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
     @vite('resources/css/app.css')
@@ -16,11 +19,8 @@
     {{-- Header User --}}
     @include('user.header')
 
-    {{-- Navbar User --}}
-    @include('user.navbar')
-
     {{-- Main Content --}}
-    <main class="px-4 md:px-8 py-6">
+    <main class="px-4 md:px-8 py-6 max-w-6xl mx-auto">
         @yield('content')
     </main>
 

@@ -1,0 +1,135 @@
+@extends('layouts.app')
+
+@section('title', 'Pemberitahuan - Aplikasi Piket')
+@section('page-title', 'Pemberitahuan')
+
+@section('content')
+<div class="max-w-6xl mx-auto">
+
+    <!-- Header dengan Filter -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h2 class="text-2xl font-bold text-[#004643]">Semua Pemberitahuan</h2>
+                <p class="text-gray-600">Notifikasi dan pengumuman terbaru</p>
+            </div>
+            
+            <!-- Filter Hari -->
+            <div class="flex flex-wrap gap-2">
+                <button class="px-4 py-2 bg-[#F9BC60] text-[#004643] font-bold rounded-lg">
+                    SENIN
+                </button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-600 font-bold rounded-lg hover:bg-gray-300">
+                    SELASA
+                </button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-600 font-bold rounded-lg hover:bg-gray-300">
+                    RABU
+                </button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-600 font-bold rounded-lg hover:bg-gray-300">
+                    KAMIS
+                </button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-600 font-bold rounded-lg hover:bg-gray-300">
+                    JUMAT
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daftar Pemberitahuan -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Header Tabel -->
+        <div class="grid grid-cols-12 bg-gray-100 border-b">
+            <div class="col-span-4 p-4 font-bold text-[#004643]">Jenis</div>
+            <div class="col-span-4 p-4 font-bold text-[#004643]">Status</div>
+            <div class="col-span-2 p-4 font-bold text-[#004643]">Tanggal</div>
+            <div class="col-span-2 p-4 font-bold text-[#004643]">Aksi</div>
+        </div>
+
+        <!-- Notifikasi 1 -->
+        <div class="grid grid-cols-12 border-b hover:bg-gray-50">
+            <div class="col-span-4 p-4">
+                <p class="font-bold text-[#004643]">Judul</p>
+                <p class="text-gray-600 text-sm">Deskripsi notifikasi</p>
+            </div>
+            <div class="col-span-4 p-4">
+                <p class="font-bold text-[#004643]">Jadwal Piket Baru</p>
+                <p class="text-gray-600 text-sm">Anda mendapat jadwal piket tanggal 5 Januari 2026</p>
+            </div>
+            <div class="col-span-2 p-4 text-[#004643] font-medium">
+                5/1/2026
+            </div>
+            <div class="col-span-2 p-4">
+                <button class="text-red-500 hover:text-red-700">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Notifikasi 2 -->
+        <div class="grid grid-cols-12 border-b hover:bg-gray-50">
+            <div class="col-span-4 p-4">
+                <p class="font-bold text-[#004643]">Laporan Disetujui</p>
+                <p class="text-gray-600 text-sm">Deskripsi laporan</p>
+            </div>
+            <div class="col-span-4 p-4">
+                <p class="font-bold text-[#004643]">Pengingat Piket</p>
+                <p class="text-gray-600 text-sm">Jangan lupa piket besok!</p>
+            </div>
+            <div class="col-span-2 p-4 text-[#004643] font-medium">
+                4/1/2026
+            </div>
+            <div class="col-span-2 p-4">
+                <button class="text-red-500 hover:text-red-700">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Notifikasi 3 -->
+        <div class="grid grid-cols-12 hover:bg-gray-50">
+            <div class="col-span-4 p-4">
+                <p class="font-bold text-[#004643]">Perubahan Jadwal</p>
+                <p class="text-gray-600 text-sm">Deskripsi perubahan</p>
+            </div>
+            <div class="col-span-4 p-4">
+                <p class="font-bold text-[#004643]">Jadwal Diubah</p>
+                <p class="text-gray-600 text-sm">Jadwal piket Anda diubah ke tanggal baru</p>
+            </div>
+            <div class="col-span-2 p-4 text-[#004643] font-medium">
+                3/1/2026
+            </div>
+            <div class="col-span-2 p-4">
+                <button class="text-red-500 hover:text-red-700">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6 flex justify-center">
+        <nav class="flex items-center gap-2">
+            <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                <span class="material-symbols-outlined">
+                    chevron_left
+                </span>
+            </button>
+            <button class="px-4 py-2 bg-[#004643] text-white rounded-lg">1</button>
+            <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">2</button>
+            <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">3</button>
+            <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                <span class="material-symbols-outlined">
+                    chevron_right
+                </span>
+            </button>
+        </nav>
+    </div>
+
+</div>
+@endsection
