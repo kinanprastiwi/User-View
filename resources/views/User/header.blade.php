@@ -14,18 +14,19 @@
          <!-- Header dengan User Info -->
     <div class="flex justify-between items-center mb-8">
         <!-- User Dropdown -->
-        <div class="relative group">
-            <div class="flex items-center gap-3 bg-white px-5 py-3 rounded-xl shadow-lg cursor-pointer hover:shadow-xl transition-all border border-gray-200">
-                <div class="w-10 h-10 bg-[#F9BC60] rounded-full flex items-center justify-center">
-                    <span class="material-symbols-outlined text-[#004643]">
+        <!-- Profile Dropdown -->
+        <div class="relative" id="profileDropdown">
+            <div class="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl shadow-lg border border-gray-100 cursor-pointer hover:shadow-xl transition-all" id="profileButton">
+                <div class="w-12 h-12 bg-gradient-to-br from-[#004643] to-[#00665f] rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-2xl">
                         person
                     </span>
                 </div>
-                <div>
-                    <p class="font-bold text-[#004643]">Budi Santoso</p>
+                <div class="text-left">
+                    <p class="font-bold text-[#004643] text-lg">Budi Santoso</p>
                     <p class="text-sm text-gray-500">XII RPL</p>
                 </div>
-                <span class="material-symbols-outlined text-[#004643] transform transition-transform group-hover:rotate-180">
+                <span class="material-symbols-outlined text-[#004643] transition-transform duration-300" id="dropdownArrow">
                     expand_more
                 </span>
             </div>
