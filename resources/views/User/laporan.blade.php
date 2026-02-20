@@ -3,6 +3,7 @@
 @section('title', 'Laporan Piket - Aplikasi Piket')
 
 @section('content')
+
 <div class="max-w-7xl mx-auto px-4 py-8">
 
     <!-- Header dengan Kelas dan Profile Dropdown -->
@@ -11,7 +12,7 @@
         <div class="flex items-center gap-4 w-full lg:w-auto justify-center lg:justify-start">
             <div class="bg-white px-8 py-5 rounded-2xl shadow-lg border border-gray-100">
                 <h2 class="text-4xl font-bold text-[#004643] text-center lg:text-left">
-                    XII RPL
+                   Divisi MA
                 </h2>
             </div>
         </div>
@@ -146,7 +147,7 @@
                         <tr class="border-b border-gray-200">
                             <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[100px]">Tanggal</th>
                             <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[80px]">Hari</th>
-                            <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[80px]">Absen</th>
+                            <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[80px]">ID</th>
                             <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[180px]">Akun User</th>
                             <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[250px]">Deskripsi Kegiatan</th>
                             <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[120px]">Status</th>

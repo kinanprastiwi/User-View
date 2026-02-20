@@ -6,83 +6,81 @@
 
 <div class="max-w-7xl mx-auto px-4 py-8">
 
-    <!-- Header dengan Kelas dan Ikon Bell -->
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-6 mb-12">
-        <!-- Kelas -->
-        <div class="flex items-center gap-4 w-full lg:w-auto justify-center lg:justify-start">
-            <div class="bg-white px-8 py-5 rounded-2xl shadow-lg border border-gray-100">
-                <h2 class="text-4xl font-bold text-[#004643] text-center lg:text-left">
-                    XII RPL
-                </h2>
+   <!-- Header dengan Kelas dan Ikon Bell -->
+<div class="flex flex-col lg:flex-row items-center justify-between gap-6 mb-12">
+    <!-- Kelas -->
+    <div class="flex items-center gap-4 w-full lg:w-auto justify-center lg:justify-start">
+        <div class="bg-white px-8 py-5 rounded-2xl shadow-lg border border-gray-100">
+            <h2 class="text-4xl font-bold text-[#004643] text-center lg:text-left">
+                {{ $user->division->name ?? 'XII RPL' }}
+            </h2>
+        </div>
+
+        <!-- Ikon Bell -->
+        <div class="relative group">
+            <div class="relative p-4 bg-white rounded-full shadow-lg cursor-pointer hover:shadow-xl transition-all border border-gray-200">
+                <span class="material-symbols-outlined text-2xl text-[#004643]">
+                    notifications
+                </span>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse font-bold">
+                    {{ $unreadCount }}
+                </span>
             </div>
 
-            <!-- Ikon Bell di sebelah kelas -->
-            <div class="relative group">
-                <div class="relative p-4 bg-white rounded-full shadow-lg cursor-pointer hover:shadow-xl transition-all border border-gray-200">
-                    <span class="material-symbols-outlined text-2xl text-[#004643]">
-                        notifications
-                    </span>
-                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse font-bold">
-                        1
-                    </span>
-
-                    
+            <!-- Dropdown Notifikasi -->
+            <div class="absolute top-full left-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 
+                       opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                       transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0">
+                <div class="p-5 border-b border-gray-100">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-[#004643] text-lg">Pemberitahuan</h3>
+                        <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{{ $unreadCount }} baru</span>
+                    </div>
                 </div>
 
-                
-
-                <!-- Dropdown Notifikasi -->
-                <div class="absolute top-full left-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 
-                           opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                           transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0">
-                    <div class="p-5 border-b border-gray-100">
-                        <div class="flex justify-between items-center">
-                            <h3 class="font-bold text-[#004643] text-lg">Pemberitahuan</h3>
-                            <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">1 baru</span>
+                <div class="max-h-96 overflow-y-auto">
+                    @forelse($notifications as $notification)
+                    <a href="#" class="flex items-start gap-4 p-5 hover:bg-gray-50 border-b border-gray-100">
+                        <div class="w-12 h-12 flex items-center justify-center bg-[#F9BC60] rounded-full">
+                            <span class="material-symbols-outlined text-[#004643]">
+                                {{ $notification->type == 'event' ? 'event' : 'notifications' }}
+                            </span>
                         </div>
-                    </div>
-
-                    <div class="max-h-full overflow-y-auto">
-                        <a href="#" class="flex items-start gap-4 p-5 hover:bg-gray-50 border-b border-gray-100">
-                            <div class="w-12 h-12 flex items-center justify-center bg-[#F9BC60] rounded-full ">
-                                <span class="material-symbols-outlined text-[#004643]">
-                                    event
-                                </span>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <p class="font-semibold text-[#004643]">{{ $notification->title }}</p>
+                                @if(!$notification->is_read)
+                                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                                @endif
                             </div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <p class="font-semibold text-[#004643]">Jadwal Piket Baru</p>
-                                    <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-                                </div>
-                                <p class="text-sm text-gray-600">Anda mendapat jadwal piket tanggal 5 Januari 2026</p>
-                                <span class="text-xs text-gray-500 mt-2 block">5/1/2026 • Baru</span>
-                            </div>
-                        </a>
+                            <p class="text-sm text-gray-600">{{ $notification->message }}</p>
+                            <span class="text-xs text-gray-500 mt-2 block">{{ $notification->created_at->diffForHumans() }}</span>
+                        </div>
+                    </a>
+                    @empty
+                    <div class="p-5 text-center text-gray-500">
+                        Tidak ada notifikasi
                     </div>
-
-                    
-                    
-                    <div class="absolute top-0 -left-4 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-200"></div>
+                    @endforelse
                 </div>
             </div>
         </div>
     </div>
 
- <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                    <span class="material-symbols-outlined text-[#004643]">
-                        person
-                    </span>
-                </div>
-                <div>
-                    <p class="font-bold text-[#004643]">Budi Santoso</p>
-                    <p class="text-sm text-gray-500">XII RPL</p>
-                </div>
-                <span class="material-symbols-outlined text-[#004643] transform transition-transform group-hover:rotate-180">
-                    expand_more
-                </span>
-            </div>
-            <br>
+    <!-- User Info -->
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#004643]">person</span>
+        </div>
+        <div>
+            <p class="font-bold text-[#004643]">{{ $user->name }}</p>
+            <p class="text-sm text-gray-500">{{ $user->division->name ?? 'Divisi MA' }}</p>
+        </div>
+        <a href="/switch-user" class="ml-2 text-xs bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">
+            Ganti User
+        </a>
+    </div>
+</div>
 
     <!-- Grid Utama -->
     <div class=" wgrid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -128,58 +126,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Baris 1 -->
-                            <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                                <td class="py-5 px-6 text-center">
-                                    <div>
-                                        <p class="font-bold text-[#004643] text-lg">Judul</p>
-                                        <p class="text-gray-600">Deskripsi</p>
-                                    </div>
-                                </td>
-                                <td class="py-5 px-6 text-center">
-                                    <div>
-                                        <p class="font-bold text-[#004643] text-lg">Jadwal Piket Baru</p>
-                                        <p class="text-gray-600">Anda mendapat jadwal piket tanggal 5 Januari 2026</p>
-                                    </div>
-                                </td>
-                                <td class="py-5 px-6 text-center">
-                                    <p class="text-[#004643] font-bold text-xl">5/1/2026</p>
-                                </td>
-                                <td class="py-5 px-6 text-center">
-                                    <button class="inline-flex items-center justify-center w-12 h-12 bg-red-100 text-red-600 rounded-full hover:bg-red-200 transition-colors">
-                                        <span class="material-symbols-outlined">
-                                            delete
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Baris 2 -->
-                            <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                                <td class="py-5 px-6 text-center">
-                                    <div>
-                                        <p class="font-bold text-[#004643] text-lg">Laporan Disetujui</p>
-                                        <p class="text-gray-600">Deskripsi laporan disetujui</p>
-                                    </div>
-                                </td>
-                                <td class="py-5 px-6 text-center">
-                                    <div>
-                                        <p class="font-bold text-[#004643] text-lg">Pengingat Piket</p>
-                                        <p class="text-gray-600">Jangan lupa piket besok!</p>
-                                    </div>
-                                </td>
-                                <td class="py-5 px-6 text-center">
-                                    <p class="text-[#004643] font-bold text-xl">4/1/2026</p>
-                                </td>
-                                <td class="py-5 px-6 text-center">
-                                    <button class="inline-flex items-center justify-center w-12 h-12 bg-red-100 text-red-600 rounded-full hover:bg-red-200 transition-colors">
-                                        <span class="material-symbols-outlined">
-                                            delete
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
+    @forelse($notifications as $notif)
+    <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+        <td class="py-5 px-6 text-center">
+            <p class="font-bold text-[#004643] text-lg">{{ $notif->type == 'info' ? 'Informasi' : 'Pemberitahuan' }}</p>
+            <p class="text-gray-600">{{ $notif->title }}</p>
+        </td>
+        <td class="py-5 px-6 text-center">
+            <p class="font-bold text-[#004643] text-lg">{{ $notif->title }}</p>
+            <p class="text-gray-600">{{ $notif->message }}</p>
+        </td>
+        <td class="py-5 px-6 text-center">
+            <p class="text-[#004643] font-bold text-xl">{{ $notif->created_at->format('d/m/Y') }}</p>
+        </td>
+        <td class="py-5 px-6 text-center">
+            <button class="inline-flex items-center justify-center w-12 h-12 bg-red-100 text-red-600 rounded-full hover:bg-red-200 transition-colors">
+                <span class="material-symbols-outlined">delete</span>
+            </button>
+        </td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="4" class="py-8 text-center text-gray-500">
+            <span class="material-symbols-outlined text-4xl mb-2">info</span>
+            <p>Tidak ada notifikasi</p>
+        </td>
+    </tr>
+    @endforelse
+</tbody>
                     </table>
                 </div>
             </div>
@@ -191,34 +165,37 @@
                 </div>
                 
                 <!-- Card Jadwal yang bisa diklik -->
-                <div id="jadwalCard" class="bg-gradient-to-r from-[#F9BC60] to-[#F9BC60]/90 rounded-2xl p-8 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300 active:scale-[0.99]">
-                    <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
-                        <div class="flex items-center gap-6">
-                            <div class="w-16 h-16 flex items-center justify-center bg-white/30 rounded-2xl">
-                                <span class="material-symbols-outlined text-[#004643] text-3xl">
-                                    location_on
-                                </span>
-                            </div>
-                            <div class="text-center lg:text-left">
-                                <h4 class="text-2xl font-bold text-[#004643] mb-2">Piket Ruang IT</h4>
-                                <div class="flex items-center justify-center lg:justify-start gap-3">
-                                    <span class="material-symbols-outlined text-[#004643]">
-                                        event
-                                    </span>
-                                    <p class="text-[#004643] font-bold text-xl">5/1/2026</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Status Badge -->
-                        <div>
-                            <span class="px-8 py-3 bg-white text-[#004643] border-2 border-[#F9BC60] font-bold rounded-xl text-lg inline-block shadow-md">
-                                Pending
-                            </span>
-                        </div>
-                    </div>
+@if($activeSchedule)
+<div id="jadwalCard" class="bg-gradient-to-r from-[#F9BC60] to-[#F9BC60]/90 rounded-2xl p-8 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300 active:scale-[0.99]"
+     data-schedule-id="{{ $activeSchedule->id }}">
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-6">
+            <div class="w-16 h-16 flex items-center justify-center bg-white/30 rounded-2xl">
+                <span class="material-symbols-outlined text-[#004643] text-3xl">location_on</span>
+            </div>
+            <div class="text-center lg:text-left">
+                <h4 class="text-2xl font-bold text-[#004643] mb-2">{{ $activeSchedule->location }}</h4>
+                <div class="flex items-center justify-center lg:justify-start gap-3">
+                    <span class="material-symbols-outlined text-[#004643]">event</span>
+                    <p class="text-[#004643] font-bold text-xl">{{ $activeSchedule->date->format('d/m/Y') }}</p>
                 </div>
-
+            </div>
+        </div>
+        
+        <!-- Status Badge -->
+        <div>
+            <span class="px-8 py-3 bg-white text-[#004643] border-2 border-[#F9BC60] font-bold rounded-xl text-lg inline-block shadow-md">
+                {{ $activeSchedule->status == 'pending' ? 'Pending' : 'Selesai' }}
+            </span>
+        </div>
+    </div>
+</div>
+@else
+<div class="text-center py-12 bg-gray-50 rounded-2xl">
+    <span class="material-symbols-outlined text-6xl text-gray-400">event_busy</span>
+    <p class="text-gray-500 mt-4">Tidak ada jadwal piket untuk Anda</p>
+</div>
+@endif
                
 <!-- MODAL DETAIL JADWAL (Muncul saat KLIK) -->
 <div id="detailModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
@@ -228,12 +205,10 @@
             <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
                 <div class="text-center lg:text-left">
                     <h2 class="text-3xl font-bold text-white">Detail Jadwal</h2>
-                    <p class="text-white/80 mt-2">ID: PKT-2026-001</p>
+                    <p class="text-white/80 mt-2" id="modalScheduleId">ID: PKT-2026-001</p>
                 </div>
                 <button id="closeModal" class="text-white hover:text-[#F9BC60] text-3xl transition-colors">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
+                    <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
         </div>
@@ -245,83 +220,50 @@
                 
                 <!-- Kolom Kiri: Informasi Detail -->
                 <div class="lg:col-span-2 p-8">
-                    <!-- Langkah 1: Informasi Utama -->
+                    <!-- Informasi Utama -->
                     <div class="mb-10">
-                        <h3 class="text-xl font-bold text-[#004643] mb-4 flex items-center gap-2">
-                            <span class="w-8 h-8 bg-[#004643] text-white rounded-full flex items-center justify-center text-sm">1</span>
-                            Informasi Jadwal
-                        </h3>
+                        <h3 class="text-xl font-bold text-[#004643] mb-4">Informasi Jadwal</h3>
                         <div class="bg-gray-50 p-6 rounded-2xl">
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Lokasi:</span>
-                                    <span class="text-xl font-bold text-[#004643]">Ruang IT - Lantai 2</span>
+                                    <span class="text-xl font-bold text-[#004643]" id="modalLocation">-</span>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Tanggal:</span>
-                                    <span class="text-xl font-bold text-[#004643]">5 Januari 2026</span>
+                                    <span class="text-xl font-bold text-[#004643]" id="modalDate">-</span>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Status:</span>
-                                    <span class="text-xl font-bold text-[#F9BC60]">Pending</span>
+                                    <span class="text-xl font-bold" id="modalStatus">-</span>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Waktu:</span>
-                                    <span class="text-xl font-bold text-[#004643]">07:00 - 08:00 WIB</span>
+                                    <span class="text-xl font-bold text-[#004643]" id="modalTime">-</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Langkah 2: Deskripsi Tugas -->
+                    <!-- Deskripsi Tugas -->
                     <div class="mb-10">
-                        <h3 class="text-xl font-bold text-[#004643] mb-4 flex items-center gap-2">
-                            <span class="w-8 h-8 bg-[#004643] text-white rounded-full flex items-center justify-center text-sm">2</span>
-                            Deskripsi Tugas:
-                        </h3>
+                        <h3 class="text-xl font-bold text-[#004643] mb-4">Deskripsi Tugas</h3>
                         <div class="bg-gray-50 p-6 rounded-2xl">
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3 p-3 hover:bg-white/50 rounded-lg transition">
-                                    <span class="material-symbols-outlined text-green-600">
-                                        check_circle
-                                    </span>
-                                    <span class="font-medium">Membersihkan papan tulis</span>
-                                </li>
-                                <li class="flex items-center gap-3 p-3 hover:bg-white/50 rounded-lg transition">
-                                    <span class="material-symbols-outlined text-green-600">
-                                        check_circle
-                                    </span>
-                                    <span class="font-medium">Merapikan kursi</span>
-                                </li>
-                                <li class="flex items-center gap-3 p-3 hover:bg-white/50 rounded-lg transition">
-                                    <span class="material-symbols-outlined text-green-600">
-                                        check_circle
-                                    </span>
-                                    <span class="font-medium">Menyapu lantai</span>
-                                </li>
-                            </ul>
+                            <div id="modalDescription" class="text-gray-700">
+                                -
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Langkah 3: Aksi -->
+                    <!-- Aksi -->
                     <div class="mb-10">
-                        <h3 class="text-xl font-bold text-[#004643] mb-4 flex items-center gap-2">
-                            <span class="w-8 h-8 bg-[#004643] text-white rounded-full flex items-center justify-center text-sm">3</span>
-                            Aksi
-                        </h3>
+                        <h3 class="text-xl font-bold text-[#004643] mb-4">Aksi</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <button class="flex items-center justify-center gap-3 px-6 py-4 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition">
-                                <span class="material-symbols-outlined">
-                                    check_circle
-                                </span>
+                                <span class="material-symbols-outlined">check_circle</span>
                                 Tandai Selesai
                             </button>
-                            <button class="flex items-center justify-center gap-3 px-6 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition">
-                                <span class="material-symbols-outlined">
-                                    upload
-                                </span>
-                                Upload Foto
-                            </button>
+                            
                         </div>
                     </div>
                 </div>
@@ -336,27 +278,27 @@
                             <!-- Foto Sebelum -->
                             <div class="text-center bg-white p-6 rounded-2xl shadow-sm">
                                 <h4 class="font-semibold text-[#004643] mb-4 text-lg">Foto Sebelum</h4>
-                                <div class="border-2 border-dashed border-gray-300 rounded-2xl h-64 flex flex-col items-center justify-center hover:border-[#004643] transition cursor-pointer bg-gray-50">
+                                <div id="photoBeforeContainer" class="border-2 border-dashed border-gray-300 rounded-2xl h-64 flex flex-col items-center justify-center hover:border-[#004643] transition cursor-pointer bg-gray-50">
                                     <span class="material-symbols-outlined text-5xl text-gray-400 mb-4">
                                         add_photo_alternate
                                     </span>
                                     <p class="text-gray-500 text-center px-4 text-sm">Klik untuk upload foto kondisi sebelum</p>
                                     <p class="text-xs text-gray-400 mt-2">Max. 5MB</p>
                                 </div>
-                                <p class="text-sm text-gray-500 mt-3 text-center">Gambar belum diupload</p>
+                                <p class="text-sm text-gray-500 mt-3 text-center" id="photoBeforeStatus">Gambar belum diupload</p>
                             </div>
 
                             <!-- Foto Sesudah -->
                             <div class="text-center bg-white p-6 rounded-2xl shadow-sm">
                                 <h4 class="font-semibold text-[#004643] mb-4 text-lg">Foto Sesudah</h4>
-                                <div class="border-2 border-dashed border-gray-300 rounded-2xl h-64 flex flex-col items-center justify-center hover:border-[#004643] transition cursor-pointer bg-gray-50">
+                                <div id="photoAfterContainer" class="border-2 border-dashed border-gray-300 rounded-2xl h-64 flex flex-col items-center justify-center hover:border-[#004643] transition cursor-pointer bg-gray-50">
                                     <span class="material-symbols-outlined text-5xl text-gray-400 mb-4">
                                         add_photo_alternate
                                     </span>
                                     <p class="text-gray-500 text-center px-4 text-sm">Klik untuk upload foto kondisi sesudah</p>
                                     <p class="text-xs text-gray-400 mt-2">Max. 5MB</p>
                                 </div>
-                                <p class="text-sm text-gray-500 mt-3 text-center">Gambar belum diupload</p>
+                                <p class="text-sm text-gray-500 mt-3 text-center" id="photoAfterStatus">Gambar belum diupload</p>
                             </div>
 
                             <!-- Status Upload -->
@@ -365,15 +307,15 @@
                                 <div class="space-y-3">
                                     <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
                                         <span class="text-sm font-medium">Foto Sebelum:</span>
-                                        <span class="text-sm text-yellow-600 font-bold">Belum diupload</span>
+                                        <span class="text-sm text-yellow-600 font-bold" id="statusBefore">Belum diupload</span>
                                     </div>
                                     <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
                                         <span class="text-sm font-medium">Foto Sesudah:</span>
-                                        <span class="text-sm text-yellow-600 font-bold">Belum diupload</span>
+                                        <span class="text-sm text-yellow-600 font-bold" id="statusAfter">Belum diupload</span>
                                     </div>
                                     <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg mt-4">
                                         <span class="text-sm font-medium">Status Jadwal:</span>
-                                        <span class="text-sm text-green-600 font-bold">Pending</span>
+                                        <span class="text-sm text-green-600 font-bold" id="statusJadwal">Pending</span>
                                     </div>
                                 </div>
                             </div>
@@ -387,7 +329,7 @@
         <div class="border-t border-gray-200 p-6 bg-gray-50 flex-shrink-0">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="text-sm text-gray-500">
-                    <p>Terakhir diperbarui: 9 Februari 2026 15:40 WIB</p>
+                    <p>Terakhir diperbarui: <span id="modalLastUpdate">9 Februari 2026 15:40 WIB</span></p>
                 </div>
                 <div class="flex gap-3">
                     <button class="px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition">
@@ -646,101 +588,243 @@ document.addEventListener('DOMContentLoaded', function() {
         jadwalCard.classList.remove('ring-4', 'ring-[#004643]/20');
     }
 
-    // Upload gambar di modal
-    const modalUploadAreas = document.querySelectorAll('#detailModal .border-dashed');
-    modalUploadAreas.forEach((area, index) => {
-        area.addEventListener('click', function() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function(e) {
-                if (e.target.files && e.target.files[0]) {
-                    // Show loading state
-                    area.innerHTML = `
-                        <div class="flex flex-col items-center justify-center">
-                            <div class="w-12 h-12 border-4 border-[#004643] border-t-transparent rounded-full animate-spin mb-3"></div>
-                            <p class="text-gray-500 text-center">Mengupload...</p>
-                        </div>
-                    `;
-                    area.classList.add('uploading');
-                    
-                    // Simulate upload delay
-                    setTimeout(() => {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            area.innerHTML = `
-                                <img src="${event.target.result}" 
-                                     class="w-full h-64 object-cover rounded-2xl" 
-                                     alt="Preview">
-                            `;
-                            area.classList.remove('uploading');
-                            
-                            // Update status text
-                            const parentDiv = area.parentElement;
-                            const textElement = parentDiv.querySelector('p.text-center');
-                            if (textElement) {
-                                textElement.textContent = 'Gambar terupload ✓';
-                                textElement.className = 'text-green-600 font-bold mt-3 text-center';
-                                
-                                // Update status in status section
-                                const statusSection = document.querySelector('.bg-white.p-6.rounded-2xl.shadow-sm:last-child');
-                                if (statusSection) {
-                                    const statusItems = statusSection.querySelectorAll('.flex.items-center.justify-between');
-                                    if (statusItems[index]) {
-                                        statusItems[index].querySelector('span:last-child').textContent = '✓ Terupload';
-                                        statusItems[index].querySelector('span:last-child').className = 'text-sm text-green-600 font-bold';
-                                        statusItems[index].classList.remove('bg-yellow-50');
-                                        statusItems[index].classList.add('bg-green-50');
-                                    }
-                                }
-                            }
-                        };
-                        reader.readAsDataURL(e.target.files[0]);
-                    }, 1500);
-                }
-            };
-            input.click();
-        });
-    });
-
-    // Tandai Selesai button
-    const selesaiBtn = document.querySelector('#detailModal button:first-child');
-    if (selesaiBtn) {
-        selesaiBtn.addEventListener('click', function() {
-            if (confirm('Apakah Anda yakin ingin menandai jadwal ini sebagai selesai?')) {
-                // Update status in modal
-                const statusElement = document.querySelector('#detailModal .text-\\[\\#F9BC60\\]');
-                if (statusElement) {
-                    statusElement.textContent = 'Selesai';
-                    statusElement.className = 'text-xl font-bold text-green-600';
+   // Upload gambar di modal
+const modalUploadAreas = document.querySelectorAll('#detailModal .border-dashed');
+modalUploadAreas.forEach((area, index) => {
+    area.addEventListener('click', function() {
+        const scheduleId = document.getElementById('jadwalCard').dataset.scheduleId;
+        
+        if (!scheduleId) {
+            alert('ID Jadwal tidak ditemukan!');
+            return;
+        }
+        
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Ukuran file maksimal 5MB');
+                    return;
                 }
                 
-                // Update status badge on card
-                const cardStatus = document.querySelector('#jadwalCard span:last-child');
-                if (cardStatus) {
-                    cardStatus.textContent = 'Selesai';
-                    cardStatus.className = 'px-8 py-3 bg-white text-green-600 border-2 border-green-600 font-bold rounded-xl text-lg inline-block shadow-md';
-                }
+                const formData = new FormData();
+                formData.append('photo', file);
+                formData.append('type', index === 0 ? 'before' : 'after');
+                formData.append('schedule_id', scheduleId);
+                formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
                 
-                // Update status in status section
-                const statusSection = document.querySelector('.bg-white.p-6.rounded-2xl.shadow-sm:last-child .bg-green-50');
-                if (statusSection) {
-                    const statusText = statusSection.querySelector('span:last-child');
-                    if (statusText) {
-                        statusText.textContent = 'Selesai';
+                // Show loading
+                const originalContent = area.innerHTML;
+                area.innerHTML = `
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 border-4 border-[#004643] border-t-transparent rounded-full animate-spin mb-3"></div>
+                        <p class="text-gray-500 text-center">Mengupload...</p>
+                    </div>
+                `;
+                
+                // UPLOAD REAL (HAPUS setTimeout)
+                fetch('/user/upload-foto', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        area.innerHTML = `<img src="${data.url}" class="w-full h-64 object-cover rounded-2xl">`;
+                        
+                        const parentDiv = area.closest('.text-center');
+                        const textElement = parentDiv.querySelector('p.text-sm.text-gray-500.mt-3');
+                        if (textElement) {
+                            textElement.textContent = 'Gambar terupload ✓';
+                            textElement.className = 'text-green-600 font-bold mt-3 text-center';
+                        }
+                        
+                        showNotification('Foto berhasil diupload!');
+                    } else {
+                        area.innerHTML = originalContent;
+                        alert('Gagal upload: ' + data.message);
                     }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    area.innerHTML = originalContent;
+                    alert('Terjadi kesalahan saat upload');
+                });
+            }
+        };
+        input.click();
+    });
+});
+// Saat modal dibuka, fetch detail jadwal
+// Saat modal dibuka, fetch detail jadwal
+jadwalCard.addEventListener('click', function() {
+    const scheduleId = this.dataset.scheduleId;
+    
+    if (!scheduleId) {
+        alert('ID Jadwal tidak ditemukan');
+        return;
+    }
+    
+    // Tampilkan modal dulu
+    detailModal.classList.remove('hidden');
+    detailModal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    jadwalCard.classList.add('ring-4', 'ring-[#004643]/20');
+    
+    // Fetch detail jadwal
+    fetch(`/user/schedule/${scheduleId}/detail`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Update lokasi
+                document.getElementById('modalLocation').textContent = data.data.location;
+                
+                // Update tanggal
+                document.getElementById('modalDate').textContent = data.data.date;
+                
+                // Update status
+                const statusElement = document.getElementById('modalStatus');
+                statusElement.textContent = data.data.status;
+                if (data.data.status === 'Selesai') {
+                    statusElement.className = 'text-xl font-bold text-green-600';
+                } else {
+                    statusElement.className = 'text-xl font-bold text-[#F9BC60]';
                 }
                 
-                // Show success notification
-                showNotification('Jadwal berhasil ditandai sebagai selesai!', 'success');
+                // Update waktu
+                document.getElementById('modalTime').textContent = 
+                    data.data.start_time + ' - ' + data.data.end_time + ' WIB';
                 
-                // Close modal after delay
-                setTimeout(() => {
-                    closeModalFunction();
-                }, 2000);
+                // Update deskripsi
+                document.getElementById('modalDescription').textContent = data.data.description || 'Tidak ada deskripsi';
+                
+                // Update foto sebelum
+                const beforeArea = document.getElementById('photoBeforeContainer');
+                const beforeStatus = document.getElementById('photoBeforeStatus');
+                if (data.data.photo_before) {
+                    beforeArea.innerHTML = `<img src="${data.data.photo_before}" class="w-full h-64 object-cover rounded-2xl">`;
+                    beforeStatus.textContent = 'Gambar terupload ✓';
+                    beforeStatus.className = 'text-green-600 font-bold mt-3 text-center';
+                    document.getElementById('statusBefore').textContent = '✓ Terupload';
+                    document.getElementById('statusBefore').className = 'text-sm text-green-600 font-bold';
+                } else {
+                    beforeArea.innerHTML = `
+                        <span class="material-symbols-outlined text-5xl text-gray-400 mb-4">add_photo_alternate</span>
+                        <p class="text-gray-500 text-center px-4 text-sm">Klik untuk upload foto kondisi sebelum</p>
+                        <p class="text-xs text-gray-400 mt-2">Max. 5MB</p>
+                    `;
+                    beforeStatus.textContent = 'Gambar belum diupload';
+                    beforeStatus.className = 'text-sm text-gray-500 mt-3 text-center';
+                }
+                
+                // Update foto sesudah
+                const afterArea = document.getElementById('photoAfterContainer');
+                const afterStatus = document.getElementById('photoAfterStatus');
+                if (data.data.photo_after) {
+                    afterArea.innerHTML = `<img src="${data.data.photo_after}" class="w-full h-64 object-cover rounded-2xl">`;
+                    afterStatus.textContent = 'Gambar terupload ✓';
+                    afterStatus.className = 'text-green-600 font-bold mt-3 text-center';
+                    document.getElementById('statusAfter').textContent = '✓ Terupload';
+                    document.getElementById('statusAfter').className = 'text-sm text-green-600 font-bold';
+                } else {
+                    afterArea.innerHTML = `
+                        <span class="material-symbols-outlined text-5xl text-gray-400 mb-4">add_photo_alternate</span>
+                        <p class="text-gray-500 text-center px-4 text-sm">Klik untuk upload foto kondisi sesudah</p>
+                        <p class="text-xs text-gray-400 mt-2">Max. 5MB</p>
+                    `;
+                    afterStatus.textContent = 'Gambar belum diupload';
+                    afterStatus.className = 'text-sm text-gray-500 mt-3 text-center';
+                }
+                
+                // Update status jadwal
+                document.getElementById('statusJadwal').textContent = data.data.status;
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Gagal memuat detail jadwal');
         });
-    }
+});
+    // Tandai Selesai button - PERBAIKI URL
+const selesaiBtn = document.querySelector('#detailModal button:first-child');
+if (selesaiBtn) {
+    selesaiBtn.addEventListener('click', function() {
+        const scheduleId = document.getElementById('jadwalCard').dataset.scheduleId;
+        
+        if (!scheduleId) {
+            alert('ID Jadwal tidak ditemukan');
+            return;
+        }
+        
+        if (confirm('Apakah Anda yakin ingin menandai jadwal ini sebagai selesai?')) {
+            
+            // Kirim ke server - PASTIKAN URL NYA /user/konfirmasi-jadwal
+            fetch('/user/konfirmasi-jadwal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ schedule_id: scheduleId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Update status in modal
+                    const statusElement = document.querySelector('#detailModal .text-\\[\\#F9BC60\\]');
+                    if (statusElement) {
+                        statusElement.textContent = data.new_status;
+                        statusElement.className = 'text-xl font-bold text-green-600';
+                    }
+                    
+                    // Update status badge on card
+                    const cardStatus = document.querySelector('#jadwalCard span:last-child');
+                    if (cardStatus) {
+                        cardStatus.textContent = data.new_status;
+                        cardStatus.className = 'px-8 py-3 bg-white text-green-600 border-2 border-green-600 font-bold rounded-xl text-lg inline-block shadow-md';
+                    }
+                    
+                    // Update status in status section
+                    const statusSection = document.querySelector('.bg-white.p-6.rounded-2xl.shadow-sm:last-child .bg-green-50');
+                    if (statusSection) {
+                        const statusText = statusSection.querySelector('span:last-child');
+                        if (statusText) {
+                            statusText.textContent = data.new_status;
+                        }
+                    }
+                    
+                    showNotification('Jadwal berhasil ditandai sebagai selesai!', 'success');
+                    
+                    // Close modal after delay
+                    setTimeout(() => {
+                        closeModalFunction();
+                    }, 2000);
+                } else {
+                    alert('Gagal: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat mengirim permintaan');
+            });
+        }
+    });
+}
 
     // Simpan Perubahan button
     const simpanBtn = document.querySelector('#detailModal button.bg-\\[\\#004643\\]');

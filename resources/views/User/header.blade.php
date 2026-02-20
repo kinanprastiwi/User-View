@@ -1,3 +1,4 @@
+@include('user.userSwitch')
 <header class="w-full bg-white shadow-sm">
     <div class="flex items-center justify-between px-6 py-4">
         <div class="flex items-center gap-4">
@@ -14,19 +15,18 @@
          <!-- Header dengan User Info -->
     <div class="flex justify-between items-center mb-8">
         <!-- User Dropdown -->
-        <!-- Profile Dropdown -->
-        <div class="relative" id="profileDropdown">
-            <div class="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl shadow-lg border border-gray-100 cursor-pointer hover:shadow-xl transition-all" id="profileButton">
-                <div class="w-12 h-12 bg-gradient-to-br from-[#004643] to-[#00665f] rounded-full flex items-center justify-center">
-                    <span class="material-symbols-outlined text-white text-2xl">
+        <div class="relative group"  id="profileDropdown">
+            <div class="flex items-center gap-3 bg-white px-5 py-3 rounded-xl shadow-lg cursor-pointer hover:shadow-xl transition-all border border-gray-200" id="profileButton">
+                <div class="w-10 h-10 bg-[#F9BC60] rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[#004643]">
                         person
                     </span>
                 </div>
-                <div class="text-left">
-                    <p class="font-bold text-[#004643] text-lg">Budi Santoso</p>
-                    <p class="text-sm text-gray-500">XII RPL</p>
-                </div>
-                <span class="material-symbols-outlined text-[#004643] transition-transform duration-300" id="dropdownArrow">
+                <div class="flex items-center gap-4">
+                <span class="text-[#004643] font-semibold">{{ $user->name ?? 'Budi Santoso' }}</span>
+                <span class="bg-[#F9BC60] px-3 py-1 rounded-full text-sm">{{ $kelas ?? 'Divisi MA' }}</span>
+            </div>
+                <span class="material-symbols-outlined text-[#004643] transform transition-transform group-hover:rotate-180" id="dropdownArrow">
                     expand_more
                 </span>
             </div>
@@ -45,7 +45,7 @@
                         </div>
                         <div>
                             <p class="font-bold text-[#004643]">Budi Santoso</p>
-                            <p class="text-sm text-gray-500">XII RPL</p>
+                            <p class="text-sm text-gray-500">Divisi MA</p>
                             <p class="text-xs text-gray-400 mt-1">ID: USR-001</p>
                         </div>
                     </div>

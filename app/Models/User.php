@@ -2,47 +2,83 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    protected $guarded = [];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $casts = [
+        'is_active' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function division()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+        return $this->belongsTo(Division::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    /**
+     * Get active schedule for today or future
+     */
+    public function getActiveSchedule()
+    {
+        return $this->schedules()
+                    ->where('date', '>=', now()->format('Y-m-d'))
+                    ->where('status', 'pending')
+                    ->orderBy('date', 'asc')
+                    ->first();
+    }
+
+    /**
+     * Get unread notifications count
+     */
+    public function getUnreadCount()
+    {
+        return $this->notifications()
+                    ->where('is_read', false)
+                    ->count();
+    }
+
+    /**
+     * Get all schedules grouped by week
+     */
+    public function getSchedulesByWeek()
+    {
+        $schedules = $this->schedules()
+                        ->orderBy('date', 'desc')
+                        ->get();
+        
+        return $schedules->groupBy(function($item) {
+            $weekNumber = ceil($item->date->format('d') / 7);
+            return 'Minggu ' . $this->getWeekName($weekNumber);
+        });
+    }
+
+    private function getWeekName($weekNumber)
+    {
+        $weeks = [
+            1 => 'Pertama',
+            2 => 'Kedua',
+            3 => 'Ketiga',
+            4 => 'Keempat',
         ];
+        return $weeks[$weekNumber] ?? 'Pertama';
     }
 }
